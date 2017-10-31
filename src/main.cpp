@@ -33,7 +33,7 @@ const char* password = "jw3qv429";
 
 WiFiServer server(80);
 
-#define PIN_MOTOR_RIGHT_UP 12
+#define PIN_MOTOR_RIGHT_UP 1
 #define PIN_MOTOR_RIGHT_DN 4
 #define PIN_MOTOR_RIGHT_SPEED 3
 
