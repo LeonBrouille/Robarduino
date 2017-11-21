@@ -26,7 +26,6 @@ ported for sparkfun esp32
  */
 #include <Arduino.h>
 #include <WiFi.h>
-//#include <ledcAnalogWrite>
 
 const char* ssid     = "PEPINIERE";
 const char* password = "jw3qv429";
@@ -45,8 +44,14 @@ WiFiServer server(80);
 unsigned char RightMotor[3] = {PIN_MOTOR_RIGHT_UP, PIN_MOTOR_RIGHT_DN, PIN_MOTOR_RIGHT_SPEED};
 unsigned char LeftMotor[3] = {PIN_MOTOR_LEFT_UP, PIN_MOTOR_LEFT_DN, PIN_MOTOR_LEFT_SPEED};
 
-/*void analogWrite() {
-}*/
+void analogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255) {
+
+  // calculate duty, 8191 from 2 ^ 13 - 1
+  uint32_t duty = (8191 / valueMax) * std::min(value, valueMax);
+
+  // write duty to LEDC
+  ledcWrite(channel, duty);
+}
 
 void Wheel (unsigned char * motor, int v)
 {
@@ -61,14 +66,14 @@ void Wheel (unsigned char * motor, int v)
       analogWrite(motor[2], i*2.55);
     }
 
-  else if (v<0) {
+  } else if (v<0) {
     digitalWrite(motor[0], LOW);
     digitalWrite(motor[1], HIGH);
     for (i=1; i<=v; i++) {
       analogWrite(motor[2], (-i)*2.55);
     }
 
-  else {
+  } else {
     digitalWrite(motor[0], LOW);
     digitalWrite(motor[1], LOW);
     analogWrite(motor[2], 0);
@@ -89,8 +94,8 @@ void setup()
 
     Serial.begin(115200);
     pinMode(16, OUTPUT);      // set the LED pin mode
-
     delay(10);
+
 
     // We start by connecting to a WiFi network
 
