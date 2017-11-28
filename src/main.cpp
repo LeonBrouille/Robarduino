@@ -32,14 +32,14 @@ const char* password = "jw3qv429";
 
 WiFiServer server(80);
 
-#define PIN_MOTOR_RIGHT_UP 12
-#define PIN_MOTOR_RIGHT_DN 4
-#define PIN_MOTOR_RIGHT_SPEED 3
+#define PIN_MOTOR_RIGHT_UP 26//12**********************************
+#define PIN_MOTOR_RIGHT_DN 35 //4
+#define PIN_MOTOR_RIGHT_SPEED 34//3
 
 /* left motor control pins */
-#define PIN_MOTOR_LEFT_UP 5
-#define PIN_MOTOR_LEFT_DN 7
-#define PIN_MOTOR_LEFT_SPEED 6
+#define PIN_MOTOR_LEFT_UP 25 //5
+#define PIN_MOTOR_LEFT_DN 33//7
+#define PIN_MOTOR_LEFT_SPEED 32//6*
 
 unsigned char RightMotor[3] = {PIN_MOTOR_RIGHT_UP, PIN_MOTOR_RIGHT_DN, PIN_MOTOR_RIGHT_SPEED};
 unsigned char LeftMotor[3] = {PIN_MOTOR_LEFT_UP, PIN_MOTOR_LEFT_DN, PIN_MOTOR_LEFT_SPEED};
@@ -84,18 +84,12 @@ void Wheel (unsigned char * motor, int v)
 
 void setup()
 {
-
-
   pinMode (PIN_MOTOR_RIGHT_UP, OUTPUT);
   pinMode (PIN_MOTOR_RIGHT_DN, OUTPUT);
   pinMode (PIN_MOTOR_LEFT_UP, OUTPUT);
-  pinMode (PIN_MOTOR_LEFT_DN, OUTPUT);
-
+  pinMode (PIN_MOTOR_LEFT_DN, OUTPUT);//*
 
     Serial.begin(115200);
-    pinMode(16, OUTPUT);      // set the LED pin mode
-    delay(10);
-
 
     // We start by connecting to a WiFi network
 
@@ -117,7 +111,6 @@ void setup()
     Serial.println(WiFi.localIP());
 
     server.begin();
-
 }
 
 
