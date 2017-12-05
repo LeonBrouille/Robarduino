@@ -56,7 +56,6 @@ void analogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255) {
 void Wheel (unsigned char * motor, int v)
 {
   uint8_t i;
-
   if (v>100) v=100;
   if (v<-100) v=-100;
   if (v>0) {
@@ -86,8 +85,10 @@ void setup()
 {
   pinMode (PIN_MOTOR_RIGHT_UP, OUTPUT);
   pinMode (PIN_MOTOR_RIGHT_DN, OUTPUT);
+  pinMode (PIN_MOTOR_RIGHT_SPEED, OUTPUT);
   pinMode (PIN_MOTOR_LEFT_UP, OUTPUT);
-  pinMode (PIN_MOTOR_LEFT_DN, OUTPUT);//*
+  pinMode (PIN_MOTOR_LEFT_DN, OUTPUT);
+  pinMode (PIN_MOTOR_LEFT_SPEED, OUTPUT);
 
     Serial.begin(115200);
 
@@ -124,7 +125,7 @@ void loop(){
     while (client.connected()) {            // loop while the client's connected
       if (client.available()) {             // if there's bytes to read from the client,
         char c = client.read();             // read a byte, then
-        Serial.write(c);                    // print it out the serial monitor
+        //Serial.write(c);                    // print it out the serial monitor
         if (c == '\n') {                    // if the byte is a newline character
 
           // if the current line is blank, you got two newline characters in a row.
@@ -165,6 +166,7 @@ void loop(){
           Wheel (LeftMotor, 0);
         }
         if (currentLine.endsWith("GET /A")) {
+          Serial.println("GET /A");
           Wheel (RightMotor, 100);
           Wheel (LeftMotor, 100);
           delay(1000);
